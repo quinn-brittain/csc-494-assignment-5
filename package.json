@@ -1,0 +1,32 @@
+{
+  "name": "tickets",
+  "version": "1.0.0",
+  "description": "ticket sales",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quinn-brittain/csc-494-assignment-4.git"
+  },
+  "keywords": [
+    "solidity",
+    "sales",
+    "ethereum"
+  ],
+  "author": "Quinn Brittain",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/quinn-brittain/csc-494-assignment-4/issues"
+  },
+  "homepage": "https://github.com/quinn-brittain/csc-494-assignment-4#readme",
+  "dependencies": {
+    "solc": "^0.8.17"
+  },
+  "devDependencies": {
+    "ganache": "^7.5.0",
+    "mocha": "^10.1.0",
+    "web3": "^1.8.1"
+  }
+}
