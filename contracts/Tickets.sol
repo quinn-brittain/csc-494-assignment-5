@@ -5,7 +5,8 @@ contract Tickets {
     address payable private owner;
     uint256 private numTickets;
     uint256 private price;
-    address[] private ticketHolders;
+    address[] private tickets;
+    mapping (address => bool) private ticketHolders;
 
     constructor(uint256 _numTickets, uint256 _price) {
         owner = payable(msg.sender);
@@ -18,8 +19,24 @@ contract Tickets {
         _;
     }
 
-    function buyTicket(uint256 ticketID) public payable {
-        require(msg.value >= price);
+    function buyTicket(uint256 ticketID) public payable returns (string memory, bool, bytes memory) {
+        string memory message;
+        bool success;
+        bytes memory data;
+        
+        if (tickets[ticketID] != address(0)) {
+            message = "This ticket is already taken";
+        } else if (ticketHolders[msg.sender]) {
+            message = "You already own a ticket";
+        } else {
+            require(msg.value >= price);
+            owner.transfer(price);
+            (success, data) = owner.call{value: price}("");
+            tickets[ticketID] = msg.sender;
+            ticketHolders[msg.sender] = true;
+            message = "Purchase successful";
+        }
+        return (message, success, data);
     }
 
     function getTicketOf(address person) public view returns (uint256) {}
@@ -52,19 +69,19 @@ contract Tickets {
         price = _price;
     }
 
-    function getTicketHolder(uint256 index) public view returns (address) {
-        return ticketHolders[index];
+    function getTicketOwner(uint256 ticketID) public view returns (address) {
+        return tickets[ticketID];
     }
 
-    function setTicketHolder(uint256 index, address ticketHolder) public restricted {
-        ticketHolders[index] = ticketHolder;
+    function setTicketOwner(uint256 ticketID, address ticketOwner) public restricted {
+        tickets[ticketID] = ticketOwner;
     }
 
-    function getTicketHolders() public view returns (address[] memory) {
-        return ticketHolders;
+    function getTickets() public view returns (address[] memory) {
+        return tickets;
     }
 
-    function setTicketHolders(address[] memory _ticketHolders) public restricted {
-        ticketHolders = _ticketHolders;
+    function setTickets(address[] memory _tickets) public restricted {
+        tickets = _tickets;
     }
 }
