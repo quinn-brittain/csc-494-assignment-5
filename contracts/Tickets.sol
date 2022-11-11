@@ -7,6 +7,7 @@ contract Tickets {
     uint256 private price;
     address[] private tickets;
     mapping (address => uint256) private ticketHolders;
+    mapping (address => address) private offers;
 
     constructor(uint256 _numTickets, uint256 _price) {
         owner = payable(msg.sender);
@@ -48,9 +49,37 @@ contract Tickets {
         tickets[ticketID] = person;
     }
 
-    function offerSwap(address partner) public {}
+    function offerSwap(address partner) public returns (string memory, bool success) {
+        string memory message;
+        bool success;
+        if (ticketHolders[msg.sender] == 0 && ticketHolders[partner] == 0) {
+            message = "One or both parties do not own a ticket";
+        } else {
+            offers[msg.sender] = partner;
+            success = true;
+            message = "Offer creation successful";
+        }
+        return (message, success);
+    }
 
-    function acceptSwap(address partner) public {}
+    function acceptSwap(address partner) public returns (string memory, bool success) {
+        string memory message;
+        bool success;
+        if (offers[partner] == address(0)) {
+            message = "No offer exists";
+        } else if (ticketHolders[msg.sender] == 0 && ticketHolders[partner] == 0) {
+            message = "One or both parties do not own a ticket";
+        } else {
+            tickets[ticketHolders[msg.sender]] = partner;
+            tickets[ticketHolders[partner]] = msg.sender;
+            uint256 tmp = ticketHolders[msg.sender];
+            ticketHolders[msg.sender] = ticketHolders[partner];
+            ticketHolders[partner] = tmp;
+            success = true;
+            message = "Offer acceptance successful";
+        }
+        return (message, success);
+    }
 
     function getOwner() public view returns (address) {
         return owner;
