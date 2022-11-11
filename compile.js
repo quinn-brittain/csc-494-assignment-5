@@ -29,5 +29,7 @@ const contracts = output.contracts["Tickets.sol"]
 
 for (let contractName in contracts) {
     const contract = contracts[contractName];
+    // console.log(contract.abi)
+    // console.log(contract.evm.bytecode.object)
     module.exports = {"abi":contract.abi, "bytecode":contract.evm.bytecode.object};
 }
