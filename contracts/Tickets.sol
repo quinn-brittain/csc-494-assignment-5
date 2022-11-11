@@ -6,12 +6,15 @@ contract Tickets {
     uint256 private numTickets;
     uint256 private price;
     address[] private tickets;
-    mapping (address => uint256) private ticketHolders;
-    mapping (address => address) private offers;
+    mapping(address => uint256) private ticketHolders;
+    mapping(address => address) private offers;
 
     constructor(uint256 _numTickets, uint256 _price) {
         owner = payable(msg.sender);
         numTickets = _numTickets;
+        for (uint256 i; i < _numTickets; i++) {
+        tickets.push();
+        }
         price = _price;
     }
 
@@ -52,7 +55,9 @@ contract Tickets {
     function offerSwap(address partner) public returns (string memory, bool success) {
         string memory message;
         bool success;
-        if (ticketHolders[msg.sender] == 0 && ticketHolders[partner] == 0) {
+        if (msg.sender == partner) {
+            message = "You cannot swap with yourself";
+        } else if (ticketHolders[msg.sender] == 0 && ticketHolders[partner] == 0) {
             message = "One or both parties do not own a ticket";
         } else {
             offers[msg.sender] = partner;
