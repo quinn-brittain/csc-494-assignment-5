@@ -75,6 +75,7 @@ contract Tickets {
             uint256 tmp = ticketHolders[msg.sender];
             ticketHolders[msg.sender] = ticketHolders[partner];
             ticketHolders[partner] = tmp;
+            offers[partner] = address(0);
             success = true;
             message = "Offer acceptance successful";
         }
