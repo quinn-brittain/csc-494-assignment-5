@@ -14,7 +14,7 @@ const deploy = async () => {
     contract = await new web3.eth.Contract(abi)
         .deploy({ 
             data: bytecode,
-            arguments: [100, web3.utils.toWei("0.001", "ether")]
+            arguments: [100, web3.utils.toWei("0.01", "ether")]
         })
         .send({
             from: accounts[1],
