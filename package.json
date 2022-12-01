@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/quinn-brittain/csc-494-assignment-4#readme",
   "dependencies": {
-    "@truffle/hdwallet-provider": "^2.1.1",
+    "@truffle/hdwallet-provider": "^2.0.15",
+    "react": "^18.2.0",
     "solc": "^0.8.17"
   },
   "devDependencies": {
