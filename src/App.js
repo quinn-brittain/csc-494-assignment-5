@@ -7,18 +7,18 @@ class App extends React.Component {
     state = {
         address: '',
         owner: '',
-        price: '',
+        price: 0,
         ticketList: []
     };
 
     async componentDidMount() {
         const address = tickets.options.address;
-        // const owner = await tickets.methods.getOwner().call();
-        // const price = await tickets.methods.getPrice().call();
-        // const ticketsList = await tickets.methods.getTickets().call();
-        const owner = "EE";
-        const price = 5;
-        const ticketList = [1, 2, 0, 0, 3, 4, 0, 0];
+        const owner = await tickets.methods.getOwner().call();
+        const price = await tickets.methods.getPrice().call();
+        const ticketList = await tickets.methods.getTickets().call();
+        // const owner = "EE";
+        // const price = 5;
+        // const ticketList = [1, 2, 0, 0, 3, 4, 0, 0];
         this.setState({ address, owner, price, ticketList });
     }
 
@@ -35,7 +35,7 @@ class App extends React.Component {
                                         return (
                                             <div class="ticket">
                                                 <input type="radio" class="btn-check" name="btnradio" id={"btnradio" + i} autocomplete="off" checked="" />
-                                                <label class="btn btn-outline-primary" for={"btnradio" + i}>{i}</label>
+                                                <label class="btn btn-primary" for={"btnradio" + i}>{i}</label>
                                             </div>
                                         )
                                     } else {
@@ -48,10 +48,12 @@ class App extends React.Component {
                                     }
                                 })}
                             </div>
+                            <div class="card-text">
+                                <span class="badge bg-primary">Available</span> <span class="badge bg-secondary">Purchased</span> <span class="badge bg-success">Owned</span></div>
                         </div>
                     </div>
                     <div class="ticket-actions">
-                        <div><button type="button" class="btn btn-primary">Buy</button> for {this.state.price} ETH</div>
+                        <div><button type="button" class="btn btn-success">Buy</button> for {this.state.price} ETH</div>
                         <div><button type="button" class="btn btn-primary">Swap</button></div>
                     </div>
                 </forum>
