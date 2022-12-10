@@ -1,13 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import 'normalize.css';
+import "bootswatch/dist/darkly/bootstrap.min.css";
 import './index.css';
+import Nav from './Nav'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Nav />
+    <main>
+      <div class="app-container card border-secondary mb-3">
+        <div class="card-body">
+          <App />
+        </div>
+      </div>
+    </main>
   </React.StrictMode>
 );
 
