@@ -1,62 +1,71 @@
 import React from "react";
 import web3 from "./web3";
 import tickets from "./tickets";
+import './App.css'
 
 class App extends React.Component {
     state = {
-        manager: '',
-        players: [],
-        balance: '',
         address: '',
-        value: '',
+        owner: '',
+        price: '',
+        ticketList: []
     };
+
     async componentDidMount() {
-        const manager = await tickets.methods.manager().call();
-        const players = await tickets.methods.getPlayers().call();
         const address = tickets.options.address;
-        const balance = await web3.eth.getBalance(tickets.options.address);
-        this.setState({ manager, players, balance, address });
+        // const owner = await tickets.methods.getOwner().call();
+        // const price = await tickets.methods.getPrice().call();
+        // const ticketsList = await tickets.methods.getTickets().call();
+        const owner = "EE";
+        const price = 5;
+        const ticketList = [1, 2, 0, 0, 3, 4, 0, 0];
+        this.setState({ address, owner, price, ticketList });
     }
-    /*
-    render(){
-       return (
-        <div className="App">
-          <h2>Lottery Contract</h2>
-          <p>This contract is managed by {this.state.manager},
-          The contract address is {this.state.address},
-          There are currenlty {this.state.players.length} people entered,
-          competing to win {web3.utils.fromWei(this.state.balance,'ether')} ether!
-          </p>
-         </div>
-      );
-    }*/
 
-
-    /*render(){
-       return (
-        <div className="App">
-          <h2>Lottery Contract</h2>
-          <p>This contract is managed by {this.state.manager},
-          The contract address is {this.state.address},
-          There are currenlty {this.state.players.length} people entered,
-          competing to win {web3.utils.fromWei(this.state.balance,'ether')} ether!
-          </p>
-  
-         <form onSubmit={this.onSubmit}>
-            <h4> Want to try your luck?</h4>
-            <div>
-            <label>Amount of ether to enter </label>
-            <input
-              value={this.state.value}
-              onChange={event=> this.setState({value: event.target.value})}
-            />
+    render() {
+        return (
+            <div className="App">
+                <forum class="tickets">
+                    <div class="ticket-selection card border-primary mb-3">
+                        <div class="card-header">Select Ticket</div>
+                        <div class="card-body">
+                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                {this.state.ticketList.map((ticket, i) => {
+                                    if (ticket === 0) {
+                                        return (
+                                            <div class="ticket">
+                                                <input type="radio" class="btn-check" name="btnradio" id={"btnradio" + i} autocomplete="off" checked="" />
+                                                <label class="btn btn-outline-primary" for={"btnradio" + i}>{i}</label>
+                                            </div>
+                                        )
+                                    } else {
+                                        return (
+                                            <div class="ticket">
+                                                <input type="radio" class="btn-check" name="btnradio" id={"btnradio" + i} autocomplete="off" checked="" />
+                                                <label class="btn btn-outline-secondary" for={"btnradio" + i}>{i}</label>
+                                            </div>
+                                        )
+                                    }
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ticket-actions">
+                        <div><button type="button" class="btn btn-primary">Buy</button> for {this.state.price} ETH</div>
+                        <div><button type="button" class="btn btn-primary">Swap</button></div>
+                    </div>
+                </forum>
+                <forum class="offers">
+                    <div class="offer-selection card border-primary mb-3">
+                        <div class="card-header">Swap Offers</div>
+                        <div class="card-body">
+                            
+                        </div>
+                    </div>
+                </forum>
             </div>
-            <button>Enter</button>
-          </form>
-          <h1>{this.state.message}</h1>
-         </div>
-      );
-    }*/
+        );
+    };
 
     onSubmit = async (event) => {
         event.preventDefault();
@@ -71,31 +80,6 @@ class App extends React.Component {
         });
         this.setState({ message: 'you have been entered!' });
     };
-
-    render() {
-        return (
-            <div className="App">
-                <p>This contract is managed by {this.state.manager}</p>
-                <p>The contract address is {this.state.address}</p>
-                <form onSubmit={this.onSubmit}>
-                    <h4> Want to try your luck?</h4>
-                    <div>
-                        <label>Amount of ether to enter </label>
-                        <input
-                            value={this.state.value}
-                            onChange={event => this.setState({ value: event.target.value })}
-                        />
-                    </div>
-                    <button>Enter</button>
-                </form>
-                <hr />
-                <h4>Ready to pick a winner?</h4>
-                <button onClick={this.onClick}>Pick a winner!</button>
-                <hr />
-                <h1>{this.state.message}</h1>
-            </div>
-        );
-    }
 
     onClick = async () => {
         const accounts = await web3.eth.getAccounts();
