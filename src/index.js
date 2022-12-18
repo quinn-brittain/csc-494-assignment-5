@@ -13,9 +13,7 @@ root.render(
     <Nav />
     <main>
       <div className="app-container card border-secondary mb-3">
-        <div className="card-body">
-          <App />
-        </div>
+        <App />
       </div>
     </main>
   </React.StrictMode>

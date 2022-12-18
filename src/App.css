@@ -1,4 +1,4 @@
-.App {
+.App .card-body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -8,12 +8,22 @@
   width: 69%;
 }
 
-.ticket-selection {
-  min-height: 0%;
+.ticket-selection .card-body {
+  display: flex;
+  flex-direction: column;
 }
 
-.ticket {
+.ticket-selection .btn-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.ticket-selection .ticket {
   margin: 3px;
+}
+
+.ticket-selection .legend {
+  margin-top: 5px;
 }
 
 .ticket-actions {
@@ -30,4 +40,8 @@
 
 .offer-selection {
   min-height: 100%;
+}
+
+.transaction-message {
+  min-height: 72px
 }

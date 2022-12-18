@@ -112,4 +112,6 @@ const abi = [
         type: 'function'
     }
 ];
-export default new web3.eth.Contract(abi, address);
+let tickets = new web3.eth.Contract(abi, address)
+tickets.defaultChain = 'goerli'
+export default tickets;
